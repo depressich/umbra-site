@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Приглашение в совместное дело · Umbra</title>
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#08090b">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&family=Manrope:wght@600&display=swap" rel="stylesheet">
+<style>
+:root { color-scheme: dark; --bg: #08090b; --char: #111318; --fg: #f0f0f0; --muted: #858a94; --dim: #5b606a; --line: rgb(240 240 240 / .08); --line-2: rgb(240 240 240 / .14); --accent: #aebdd0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { min-height: 100svh; display: grid; place-items: center; background: radial-gradient(60% 50% at 50% 0%, #12151b, var(--bg)); color: var(--fg); font: 400 15px/1.6 "Inter", system-ui, sans-serif; -webkit-font-smoothing: antialiased; padding: 24px 16px; }
+.card { width: min(560px, 100%); border: 1px solid var(--line-2); border-radius: 16px; background: rgb(17 19 24 / .8); padding: 32px; }
+.brand { display: flex; align-items: center; gap: 10px; font: 600 15px "Manrope", sans-serif; }
+.brand svg { width: 20px; height: 20px; }
+.eyebrow { margin-top: 28px; font: 12px "IBM Plex Mono", monospace; color: var(--muted); }
+h1 { margin-top: 10px; font: 600 clamp(26px, 5vw, 34px)/1.1 "Manrope", sans-serif; letter-spacing: -.03em; }
+p { margin-top: 12px; color: var(--muted); }
+ol { margin: 22px 0 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 12px; }
+li { counter-increment: s; position: relative; padding-left: 34px; color: var(--muted); }
+li::before { content: counter(s); position: absolute; left: 0; top: 1px; width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--line-2); display: grid; place-items: center; font: 500 11px "IBM Plex Mono", monospace; color: var(--fg); }
+li b { color: var(--fg); font-weight: 500; }
+.link { margin-top: 24px; display: flex; gap: 8px; }
+.link input { flex: 1; min-width: 0; height: 44px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--bg); color: var(--fg); font: 12.5px "IBM Plex Mono", monospace; }
+button, .btn { height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line-2); background: transparent; color: var(--fg); font: 500 14px "Inter", sans-serif; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; white-space: nowrap; }
+button.solid, .btn.solid { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.note { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 13px; color: var(--dim); }
+.bad { color: #f2a0a0; }
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="brand"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#f0f0f0"/><circle cx="15.5" cy="10" r="8.6" fill="#08090b"/></svg>Umbra</div>
+  <div class="eyebrow">Приглашение</div>
+  <h1>Вас пригласили в совместное дело</h1>
+  <p id="lead">Дело зашифровано. Ключ находится в самой ссылке и откроется только в приложении Umbra.</p>
+
+  <div class="link" id="linkRow">
+    <input id="link" readonly aria-label="Ссылка-приглашение">
+    <button class="solid" id="copy" type="button">Копировать</button>
+  </div>
+
+  <ol>
+    <li>Откройте <b>Umbra</b> и войдите в аккаунт.</li>
+    <li>В боковой панели рядом с «Дела» нажмите <b>«Присоединиться по ссылке»</b>.</li>
+    <li>Вставьте ссылку и нажмите <b>«Присоединиться»</b>.</li>
+  </ol>
+
+  <div class="row">
+    <a class="btn" href="../download/UmbraLauncher-setup.exe" download>Скачать Umbra</a>
+    <a class="btn" href="../">О приложении</a>
+  </div>
+
+  <p class="note">Часть ссылки после «#» браузер не отправляет ни на этот сайт, ни на сервер Umbra — ключ дела остаётся только у вас. Эта страница его никуда не передаёт.</p>
+</main>
+<script>
+  // Shows the invite back to the user for copying. Nothing is sent anywhere.
+  const frag = location.hash.slice(1);
+  const ok = /^[A-Za-z0-9_-]{16}\.[A-Za-z0-9_-]{43}$/.test(frag);
+  const input = document.getElementById("link");
+  if (ok) input.value = location.href;
+  else {
+    document.getElementById("linkRow").hidden = true;
+    const lead = document.getElementById("lead");
+    lead.textContent = "Ссылка неполная: в ней нет ключа приглашения. Попросите отправителя скопировать её целиком.";
+    lead.className = "bad";
+  }
+  document.getElementById("copy").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(input.value); } catch { input.select(); document.execCommand("copy"); }
+    document.getElementById("copy").textContent = "Скопировано";
+  });
+</script>
+</body>
+</html>
