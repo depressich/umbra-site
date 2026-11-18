@@ -2,454 +2,408 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Umbra — OSINT-верстак</title>
-<meta name="description" content="Umbra — локальное десктоп-приложение для расследований по открытым источникам: пивоты, поиск никнейма по 400+ сайтам, доска связей, заметки. Всё хранится на вашем компьютере.">
-<meta name="theme-color" content="#000000">
-<meta property="og:title" content="Umbra — OSINT-верстак">
-<meta property="og:description" content="Расследования по открытым источникам в одном окне. Локально, без облака.">
-<meta property="og:image" content="assets/sherlock-results.png">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Umbra — OSINT-верстак для Windows</title>
+<meta name="description" content="Umbra — десктоп-приложение для расследований по открытым источникам: пивоты по 12 типам данных, поиск никнейма по сотням сайтов, доска связей, заметки и поиск по фото. Данные хранятся локально.">
+<meta name="theme-color" content="#08090b">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Umbra — OSINT-верстак для Windows">
+<meta property="og:description" content="Расследование по открытым источникам в одном окне. Данные остаются на вашем компьютере.">
+<meta property="og:image" content="https://depressich.github.io/umbra-site/assets/img/overview-1200.jpg">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
-<style>
-:root {
-  color-scheme: dark;
-  --bg: #000;
-  --surface: #0a0a0a;
-  --elevated: #141414;
-  --line: rgb(255 255 255 / .08);
-  --line-strong: rgb(255 255 255 / .16);
-  --fg: #fafafa;
-  --muted: #a3a3a3;
-  --faint: #737373;
-  --gold: #ffb86b;
-  --sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-  --serif: "Source Serif 4", Georgia, serif;
-  --ease: cubic-bezier(.22, 1, .36, 1);
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg); color: var(--fg); font: 15px/1.6 var(--sans);
-  -webkit-font-smoothing: antialiased; overflow-x: hidden;
-}
-a { color: inherit; text-decoration: none; }
-img { display: block; max-width: 100%; }
-::selection { background: var(--fg); color: var(--bg); }
-
-#sky { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-main, header, footer { position: relative; z-index: 1; }
-.wrap { width: min(1160px, 100% - 32px); margin-inline: auto; }
-
-.label {
-  font: 500 10.5px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--faint);
-}
-
-/* nav */
-header {
-  position: sticky; top: 0; z-index: 10;
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  background: rgb(0 0 0 / .55); border-bottom: 1px solid var(--line);
-}
-nav { display: flex; align-items: center; gap: 28px; height: 60px; }
-.brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -.01em; }
-.brand svg { animation: corona 7s ease-in-out infinite; }
-@keyframes corona {
-  0%, 100% { filter: drop-shadow(0 0 2px rgb(255 255 255 / .25)); }
-  50% { filter: drop-shadow(0 0 8px rgb(255 255 255 / .5)); }
-}
-.links { display: flex; gap: 24px; margin-left: auto; font-size: 13.5px; color: var(--muted); }
-.links a:hover { color: var(--fg); }
-
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-  height: 44px; padding: 0 22px; border-radius: 8px; font: 500 14px var(--sans);
-  border: 1px solid var(--line-strong); background: var(--surface); color: var(--fg);
-  transition: background-color .15s, border-color .15s, transform .15s; cursor: pointer;
-}
-.btn:hover { background: #1c1c1c; border-color: rgb(255 255 255 / .25); }
-.btn:active { transform: scale(.98); }
-.btn.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
-.btn.primary:hover { background: rgb(250 250 250 / .86); }
-.btn.sm { height: 34px; padding: 0 14px; font-size: 13px; }
-.btn[aria-disabled="true"] { cursor: default; }
-.pill {
-  font: 500 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase;
-  padding: 4px 7px; border-radius: 4px; border: 1px solid currentColor; opacity: .7;
-}
-
-/* hero */
-.hero { min-height: min(calc(100svh - 60px), 980px); display: grid; align-content: center; padding: 72px 0 56px; }
-.hero h1 {
-  font: 400 clamp(42px, 6.6vw, 88px)/1.04 var(--serif); letter-spacing: -.02em;
-  text-shadow: 0 0 40px rgb(255 255 255 / .18); margin-top: 22px;
-}
-.hero h1 em { font-style: italic; color: transparent; background: linear-gradient(100deg, #fff 10%, var(--gold) 90%); -webkit-background-clip: text; background-clip: text; }
-.hero p.lead { margin-top: 26px; max-width: 52ch; font-size: 17px; color: var(--muted); }
-.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
-.meta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 44px; font: 12px var(--mono); color: var(--faint); }
-.meta b { color: var(--fg); font-weight: 500; }
-
-/* reveal */
-.js .rv { opacity: 0; transform: translateY(18px); filter: blur(6px); transition: opacity .9s var(--ease), transform .9s var(--ease), filter .9s var(--ease); }
-.js .rv.in { opacity: 1; transform: none; filter: none; }
-
-/* window frame */
-.shot {
-  border-radius: 14px; border: 1px solid var(--line-strong); background: var(--surface); overflow: hidden;
-  box-shadow: 0 40px 120px rgb(0 0 0 / .9), 0 0 0 1px rgb(255 255 255 / .03), 0 0 120px -30px rgb(255 184 107 / .25);
-}
-.shot .bar { display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px; border-bottom: 1px solid var(--line); }
-.shot .bar i { width: 9px; height: 9px; border-radius: 50%; background: rgb(255 255 255 / .14); }
-.shot .bar span { margin-left: 8px; font: 11px var(--mono); color: var(--faint); }
-
-section { padding: 110px 0; }
-.head { max-width: 640px; margin-bottom: 48px; }
-.head h2 { font: 400 clamp(32px, 4.4vw, 50px)/1.08 var(--serif); letter-spacing: -.015em; margin-top: 14px; }
-.head p { margin-top: 16px; color: var(--muted); }
-
-/* features */
-.grid { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: rgb(10 10 10 / .7); }
-.card { position: relative; padding: 30px 28px 32px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); overflow: hidden; }
-.card:nth-child(3n) { border-right: 0; }
-.card:nth-last-child(-n+3) { border-bottom: 0; }
-.card::before {
-  content: ""; position: absolute; inset: 0; opacity: 0; transition: opacity .3s;
-  background: radial-gradient(360px circle at var(--x, 50%) var(--y, 50%), rgb(255 255 255 / .06), transparent 60%);
-}
-.card:hover::before { opacity: 1; }
-.card .ic { width: 38px; height: 38px; border-radius: 9px; border: 1px solid var(--line-strong); display: grid; place-items: center; background: var(--bg); }
-.card h3 { margin-top: 22px; font-size: 16px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
-.card h3 kbd { font: 10.5px var(--mono); color: var(--faint); border: 1px solid var(--line-strong); border-radius: 4px; padding: 2px 5px; }
-.card p { margin-top: 8px; font-size: 14px; color: var(--muted); }
-svg.i { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-
-/* sherlock */
-.split { display: grid; grid-template-columns: 1fr 1.35fr; gap: 64px; align-items: center; }
-.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 34px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-.stats div { background: var(--bg); padding: 18px 16px; }
-.stats b { display: block; font: 400 34px/1 var(--serif); }
-.stats span { display: block; margin-top: 8px; font: 11px var(--mono); color: var(--faint); }
-ul.ticks { list-style: none; margin-top: 26px; display: grid; gap: 10px; color: var(--muted); font-size: 14px; }
-ul.ticks li { display: flex; gap: 12px; }
-ul.ticks li::before { content: ""; flex: none; width: 5px; height: 5px; margin-top: 9px; border-radius: 50%; background: var(--fg); box-shadow: 0 0 8px #fff; }
-
-/* privacy */
-.orbit { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-.orbit div { border: 1px solid var(--line); border-radius: 12px; padding: 22px 20px; background: rgb(10 10 10 / .7); }
-.orbit h4 { font: 500 14px var(--sans); }
-.orbit p { margin-top: 6px; font-size: 13.5px; color: var(--muted); }
-
-/* download */
-.dl { text-align: center; padding: 140px 0 120px; }
-.dl h2 { font: 400 clamp(38px, 6vw, 72px)/1.04 var(--serif); letter-spacing: -.02em; text-shadow: 0 0 40px rgb(255 255 255 / .2); }
-.dl p { margin: 18px auto 0; max-width: 46ch; color: var(--muted); }
-.dl .cta { justify-content: center; }
-.dl small { display: block; margin-top: 18px; font: 11.5px var(--mono); color: var(--faint); }
-
-footer { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: 12.5px; color: var(--faint); }
-footer .wrap { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; }
-footer .wrap > :last-child { margin-left: auto; }
-
-@media (max-width: 900px) {
-  .links { display: none; }
-  nav .btn { margin-left: auto; }
-  .grid { grid-template-columns: 1fr; }
-  .card { border-right: 0 !important; border-bottom: 1px solid var(--line) !important; }
-  .card:last-child { border-bottom: 0 !important; }
-  .split { grid-template-columns: 1fr; gap: 40px; }
-  .orbit { grid-template-columns: 1fr 1fr; }
-  section { padding: 80px 0; }
-}
-@media (max-width: 560px) {
-  .orbit { grid-template-columns: 1fr; }
-  .stats b { font-size: 26px; }
-  .hero p.lead { font-size: 16px; }
-  .btn { width: 100%; }
-  nav .btn { width: auto; }
-  footer .wrap > :last-child { margin-left: 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .js .rv { opacity: 1; transform: none; filter: none; transition: none; }
-  .brand svg { animation: none; }
-}
-</style>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&family=Manrope:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>
+  document.documentElement.classList.add("js");
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("motion");
+</script>
 </head>
 <body>
-<canvas id="sky" aria-hidden="true"></canvas>
+<a class="skip" href="#main">Перейти к содержимому</a>
 
-<header>
-  <nav class="wrap">
-    <a class="brand" href="#top" aria-label="Umbra — наверх">
-      <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#fafafa"/><circle cx="15.5" cy="10" r="8.6" fill="#000"/></svg>
+<header class="nav" id="nav">
+  <div class="container">
+    <a class="brand" href="#top" aria-label="Umbra — в начало">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#f0f0f0"/><circle cx="15.5" cy="10" r="8.6" fill="#08090b"/></svg>
       Umbra
     </a>
-    <div class="links">
-      <a href="#features">Возможности</a>
-      <a href="#sherlock">Поиск по никнейму</a>
+    <nav class="nav-links" aria-label="Разделы">
+      <a href="#overview">Продукт</a>
+      <a href="#pivot">Поиск</a>
+      <a href="#board">Доска</a>
+      <a href="#notes">Заметки</a>
       <a href="#local">Приватность</a>
-    </div>
+      <a href="#specs">Характеристики</a>
+    </nav>
     <a class="btn sm" href="#download">Скачать</a>
-  </nav>
+  </div>
 </header>
 
-<main id="top">
-  <div class="wrap hero">
-    <div class="label rv">OSINT-верстак · Windows</div>
-    <h1 class="rv">Всё, что видно,<br><em>в&nbsp;одном окне.</em></h1>
-    <p class="lead rv">Umbra — десктоп-приложение для расследований по открытым источникам. Пробивайте никнеймы, email, домены и IP, связывайте находки на доске и ведите заметки. Всё хранится только на вашем компьютере.</p>
-    <div class="cta rv">
-      <a class="btn primary" href="#download">
-        <svg class="i" viewBox="0 0 24 24"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M4 19h16"/></svg>
-        Скачать для Windows
-      </a>
-      <a class="btn" href="#features">Возможности</a>
+<main id="main">
+
+<!-- ═══ HERO ═══════════════════════════════════════════════════════════════ -->
+<section class="hero" id="top" aria-label="Umbra">
+  <div class="hero-stage" id="stage">
+    <svg class="poster" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs><radialGradient id="pg" cx="68%" cy="50%" r="30%"><stop offset="0" stop-color="#aebdd0" stop-opacity=".12"/><stop offset="1" stop-color="#aebdd0" stop-opacity="0"/></radialGradient></defs>
+      <rect width="1600" height="1000" fill="#08090b"/><rect width="1600" height="1000" fill="url(#pg)"/>
+      <g stroke="#f0f0f0" stroke-opacity=".12" fill="none">
+        <path d="M1088 500 L1290 330 L1420 470 L1300 660 L1088 500 L900 360 M1290 330 L1170 200 M1300 660 L1180 820 M900 360 L820 560 L1088 500"/>
+      </g>
+      <g fill="#f0f0f0"><circle cx="1290" cy="330" r="3"/><circle cx="1420" cy="470" r="2"/><circle cx="1300" cy="660" r="2.5"/><circle cx="900" cy="360" r="2"/><circle cx="1170" cy="200" r="1.6"/><circle cx="1180" cy="820" r="1.6"/><circle cx="820" cy="560" r="1.8"/></g>
+      <circle cx="1088" cy="500" r="128" fill="#08090b" stroke="#c9d5e3" stroke-opacity=".7"/>
+    </svg>
+  </div>
+  <div class="container">
+    <div class="hero-copy">
+      <span class="eyebrow bare" data-hero>Umbra · OSINT-верстак для Windows</span>
+      <h1 class="display h-xl split" data-hero-title><span class="nw">OSINT-расследование</span> <span class="soft">в одном окне.</span></h1>
+      <p class="lead" data-hero>Десктоп-приложение для работы с открытыми источниками: пивоты по идентификаторам, поиск никнейма по сотням сайтов, доска связей и заметки. <strong>Данные дела хранятся на вашем компьютере.</strong></p>
+      <div class="hero-cta" data-hero>
+        <a class="btn solid" href="#download">Скачать для Windows <span class="tag">скоро</span></a>
+        <a class="btn" href="#overview">Как это устроено <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
     </div>
-    <div class="meta rv">
-      <span><b>6</b> рабочих разделов</span>
-      <span><b>94</b> OSINT-ресурса в каталоге</span>
-      <span><b>400+</b> сайтов в поиске по никнейму</span>
-      <span><b>0</b> облачных серверов</span>
+    <div class="hero-foot" data-hero>
+      <div class="hero-facts">
+        <span><b>Tauri 2</b> · ядро на Rust</span>
+        <span><b>SQLite</b> · локальная база</span>
+        <span><b>Ctrl K</b> · палитра команд</span>
+      </div>
+      <div class="scroll-cue"><i></i>Листайте</div>
     </div>
   </div>
+</section>
 
-  <div class="wrap rv">
-    <figure class="shot">
-      <div class="bar"><i></i><i></i><i></i><span>Umbra — Поиск · blue</span></div>
-      <img src="assets/sherlock-results.png" width="1456" height="909" alt="Окно Umbra: раздел «Поиск», результаты проверки никнейма blue — 198 найденных профилей на 417 сайтах" loading="lazy">
-    </figure>
+<!-- ═══ 01 · OVERVIEW ════════════════════════════════════════════════════ -->
+<section class="sec overview" id="overview">
+  <div class="container">
+    <div class="sec-head">
+      <span class="eyebrow"><span class="idx">01</span> Продукт</span>
+      <h2 class="display h-lg split">Одно дело. Шесть разделов.</h2>
+      <p class="body" data-reveal>Объекты, связи и заметки расследования живут в одном деле. Каждый раздел открывается с клавиатуры, а палитра <kbd>Ctrl K</kbd> находит команду, объект, заметку или настройку.</p>
+    </div>
+    <div class="stage">
+      <figure class="frame" id="overviewFrame">
+        <img src="assets/img/overview-1200.jpg" srcset="assets/img/overview-1200.jpg 1200w, assets/img/overview-2400.jpg 2400w" sizes="(min-width: 1400px) 1320px, 100vw" width="2400" height="1539" alt="Раздел «Обзор» с демо-делом example.com: карта дела в виде галактики, объекты сгруппированы по типам и соединены связями" loading="lazy" decoding="async">
+      </figure>
+      <p class="cap">Обзор · встроенное демо-дело «example.com»: объекты дела становятся звёздами на карте</p>
+    </div>
+
+    <div class="toc" role="list">
+      <a role="listitem" href="#overview" data-reveal><span class="n">01</span><span class="t">Обзор</span><span class="d">Карта дела, быстрый ввод, сводка и недавние запросы</span><kbd>Ctrl 1</kbd></a>
+      <a role="listitem" href="#pivot" data-reveal><span class="n">02</span><span class="t">Поиск</span><span class="d">Пивоты по 12 типам данных с автоопределением типа и проверкой никнейма по сайтам</span><kbd>Ctrl 2</kbd></a>
+      <a role="listitem" href="#tools" data-reveal><span class="n">03</span><span class="t">Инструменты</span><span class="d">Каталог из 94 ресурсов в 15 категориях с фильтрами и избранным</span><kbd>Ctrl 3</kbd></a>
+      <a role="listitem" href="#board" data-reveal><span class="n">04</span><span class="t">Доска связей</span><span class="d">Граф сущностей в духе Maltego: связи с подписями, трансформы из узла, режим 3D</span><kbd>Ctrl 4</kbd></a>
+      <a role="listitem" href="#notes" data-reveal><span class="n">05</span><span class="t">Заметки</span><span class="d">Markdown с вики-ссылками и обратными ссылками, граф заметок</span><kbd>Ctrl 5</kbd></a>
+      <a role="listitem" href="#image" data-reveal><span class="n">06</span><span class="t">По фото</span><span class="d">Google Cloud Vision в приложении и четыре поисковика в браузере</span><kbd>Ctrl 6</kbd></a>
+    </div>
   </div>
+</section>
 
-  <section id="features">
-    <div class="wrap">
-      <div class="head rv">
-        <div class="label">Возможности</div>
-        <h2>Инструменты расследования, собранные в одну систему</h2>
-        <p>Каждый раздел вызывается с клавиатуры, а палитра команд <span style="font-family:var(--mono)">Ctrl K</span> доберётся до чего угодно: объекта, заметки, дела или настройки.</p>
+<!-- ═══ 02 · PIVOT ═══════════════════════════════════════════════════════ -->
+<section class="sec" id="pivot">
+  <div class="container pivot-grid">
+    <div>
+      <span class="eyebrow"><span class="idx">02</span> Поиск</span>
+      <h2 class="display h-md split" style="margin-top:26px">Вставьте значение. Umbra поймёт, что это.</h2>
+      <p class="body" style="margin-top:22px" data-reveal>Никнейм, email, домен, IP, телефон, криптокошелёк: тип определяется автоматически, и для каждого есть свой набор пивотов. Ссылки открываются в вашем браузере, вместе с вашими сессиями и настройками OPSEC.</p>
+
+      <div class="detector" data-reveal>
+        <label for="probe">Попробуйте: здесь работают те же правила, что в приложении</label>
+        <input id="probe" type="text" spellcheck="false" autocomplete="off" value="example.com" aria-describedby="verdict">
+        <div class="samples" aria-label="Примеры">
+          <button type="button">johndoe</button><button type="button">user@mail.com</button><button type="button">8.8.8.8</button><button type="button">+7 900 000-00-00</button><button type="button">55.7558, 37.6173</button><button type="button">0x52908400098527886E0F7030069857D2E4169EE7</button>
+        </div>
+        <div class="types" id="types" aria-hidden="true"></div>
+        <div class="verdict" id="verdict" aria-live="polite"></div>
       </div>
-      <div class="grid rv">
-        <div class="card">
-          <div class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></div>
-          <h3>Обзор <kbd>Ctrl 1</kbd></h3>
-          <p>Карта дела в виде живой галактики: объекты становятся звёздами, связи — созвездиями.</p>
+
+      <ul class="points">
+        <li data-reveal>«Открыть все» запускает весь набор пивотов разом</li>
+        <li data-reveal>Значение одной кнопкой попадает на доску связей</li>
+        <li data-reveal>Для никнейма в этом же разделе работает проверка по сайтам</li>
+      </ul>
+    </div>
+    <div class="pivot-visual" data-reveal>
+      <figure class="frame">
+        <img src="assets/img/pivot-1200.jpg" srcset="assets/img/pivot-1200.jpg 1200w, assets/img/pivot-2400.jpg 2400w" sizes="(min-width: 900px) 58vw, 100vw" width="2400" height="1500" alt="Раздел «Поиск»: для example.com определён тип «Домен», 11 источников сгруппированы: DNS / WHOIS, сертификаты, инфраструктура, архивы, поиск" loading="lazy" decoding="async">
+      </figure>
+      <p class="cap">Поиск · example.com → Домен, 11 источников</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 03 · SHERLOCK (pinned) ═════════════════════════════════════════════ -->
+<section class="sherlock" id="sherlock" aria-label="Поиск по никнейму">
+  <div class="pin">
+    <div class="container">
+      <div class="sh-grid">
+        <div>
+          <span class="eyebrow"><span class="idx">02.1</span> Поиск по никнейму</span>
+          <h2 class="display h-md split" style="margin-top:26px">Сотни сайтов. Около минуты.</h2>
+          <p class="body" style="margin-top:20px" data-reveal>Встроенный движок на основе Sherlock Project проверяет, где зарегистрирован никнейм. Ниже — реальный прогон для ника <code class="inline">blue</code>.</p>
+          <div class="counter" aria-hidden="true"><span id="shChecked">417</span><small>/ 417</small></div>
+          <div class="bar" aria-hidden="true"><i id="shBar"></i></div>
+          <div class="sh-stats">
+            <div><b id="shFound">198</b>найдено</div>
+            <div><b id="shAbsent">167</b>нет аккаунта</div>
+            <div><b id="shTime">0:55</b>время</div>
+          </div>
         </div>
-        <div class="card">
-          <div class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12l6-6"/></svg></div>
-          <h3>Поиск <kbd>Ctrl 2</kbd></h3>
-          <p>Пивоты по 12 типам данных с автоопределением: никнейм, email, домен, IP, телефон, криптокошелёк.</p>
+        <div class="sh-shots">
+          <figure class="frame" id="shScan">
+            <img src="assets/img/sherlock-scan-1456.jpg" width="1456" height="909" alt="Проверка в процессе: 53 из 417 сайтов, найдено 25 профилей" loading="lazy" decoding="async">
+          </figure>
+          <figure class="frame" id="shDone">
+            <img src="assets/img/sherlock-results-1456.jpg" width="1456" height="909" alt="Проверка завершена: 417 из 417, найдено 198 профилей, кнопки «Открыть все», «На доску со связями», «Отчёт в заметку»" loading="lazy" decoding="async">
+          </figure>
         </div>
-        <div class="card">
-          <div class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M5 4v16M9 4v16M14 4l5 16"/></svg></div>
-          <h3>Инструменты <kbd>Ctrl 3</kbd></h3>
-          <p>Каталог из 94 ресурсов в 15 категориях по мотивам OSINT Framework, с фильтрами и избранным.</p>
-        </div>
-        <div class="card">
-          <div class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="8" r="2.5"/><circle cx="9" cy="18" r="2.5"/><path d="M8.3 7.1l7.3 1M7 8.4l1.4 7.2M16.4 9.9l-5.6 6.4"/></svg></div>
-          <h3>Доска связей <kbd>Ctrl 4</kbd></h3>
-          <p>Граф сущностей: перетаскивание, подписи связей, трансформы прямо из узла и режим 3D.</p>
-        </div>
-        <div class="card">
-          <div class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h5"/></svg></div>
-          <h3>Заметки <kbd>Ctrl 5</kbd></h3>
-          <p>Markdown с вики-ссылками <span style="font-family:var(--mono);font-size:13px">[[…]]</span>, обратными ссылками и графом заметок.</p>
-        </div>
-        <div class="card">
-          <div class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><circle cx="12" cy="12" r="3"/></svg></div>
-          <h3>По фото</h3>
-          <p>Обратный поиск изображения: Google Cloud Vision внутри приложения, Lens, Яндекс, Bing и TinEye в браузере.</p>
+      </div>
+      <div class="sh-notes">
+        <div data-reveal><h3>Правила Sherlock</h3><p>База из 481 сайта встроена в приложение и обновляется с GitHub одной кнопкой.</p></div>
+        <div data-reveal><h3>Честные статусы</h3><p>Если ответила защита от ботов или сайт ограничил запросы, результат помечается как «не удалось проверить».</p></div>
+        <div data-reveal><h3>Потоком</h3><p>Результаты появляются по мере ответа сайтов, проверку можно остановить в любой момент.</p></div>
+        <div data-reveal><h3>Дальше в работу</h3><p>Найденное отправляется на доску со связями или сохраняется отчётом в заметку.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 04 · BOARD ═══════════════════════════════════════════════════════ -->
+<section class="sec" id="board">
+  <div class="container">
+    <div class="board-copy">
+      <div>
+        <span class="eyebrow"><span class="idx">04</span> Доска связей</span>
+        <h2 class="display h-md split" style="margin-top:26px">Связи, которые видно.</h2>
+      </div>
+      <div>
+        <p class="body" data-reveal>Граф сущностей в духе Maltego. Перетаскивайте объекты, подписывайте связи и запускайте трансформы прямо из узла: инспектор показывает пивоты для его типа. Тот же граф можно развернуть в 3D.</p>
+        <div class="switch" role="group" aria-label="Режим доски" data-reveal>
+          <button type="button" aria-pressed="true" data-mode="2d">2D</button>
+          <button type="button" aria-pressed="false" data-mode="3d">3D</button>
         </div>
       </div>
     </div>
-  </section>
-
-  <section id="sherlock">
-    <div class="wrap split">
-      <div class="rv">
-        <div class="label">Поиск по никнейму</div>
-        <div class="head" style="margin-bottom:0">
-          <h2>Сотни сайтов за&nbsp;минуту</h2>
-          <p>Встроенный движок на основе Sherlock Project проверяет, где зарегистрирован никнейм. Результаты появляются по мере ответа сайтов, а найденные профили ложатся на доску вместе со связями.</p>
-        </div>
-        <div class="stats">
-          <div><b>417</b><span>сайтов проверено</span></div>
-          <div><b>198</b><span>профилей найдено</span></div>
-          <div><b>55 с</b><span>на всю проверку</span></div>
-        </div>
-        <ul class="ticks">
-          <li>Правила сайтов совпадают с Sherlock, базу можно обновить с GitHub в один клик</li>
-          <li>Распознаёт защиту от ботов и лимиты запросов, поэтому они не превращаются в ложные «найден»</li>
-          <li>Отчёт сохраняется в заметку, ссылки копируются одной кнопкой</li>
-        </ul>
+    <div class="board-stage" id="boardStage">
+      <div class="main">
+        <figure class="frame">
+          <img src="assets/img/board-1200.jpg" srcset="assets/img/board-1200.jpg 1200w, assets/img/board-2400.jpg 2400w" sizes="(min-width: 1400px) 1320px, 100vw" width="2400" height="1500" alt="Доска связей в 2D: example.com связан с IANA (владелец), 93.184.215.14 (A-запись) и admin@example.com (контакт); IP связан с example.org (общий IP)" loading="lazy" decoding="async">
+          <img class="alt" src="assets/img/board-3d-1200.jpg" srcset="assets/img/board-3d-1200.jpg 1200w, assets/img/board-3d-2400.jpg 2400w" sizes="(min-width: 1400px) 1320px, 100vw" width="2400" height="1500" alt="Та же доска в режиме 3D: объекты как звёзды в пространстве" loading="lazy" decoding="async">
+        </figure>
       </div>
-      <figure class="shot rv">
-        <div class="bar"><i></i><i></i><i></i><span>проверка идёт · 53 / 417</span></div>
-        <img src="assets/sherlock-scan.png" width="1456" height="909" alt="Проверка никнейма в процессе: прогресс 53 из 417, уже найдено 25 профилей" loading="lazy">
+      <figure class="inspector" data-depth>
+        <img src="assets/img/inspector-600.jpg" width="600" height="1400" alt="Инспектор объекта «Домен example.com»: комментарий, создание заметки и 11 трансформов — ICANN Lookup, ViewDNS, SecurityTrails, crt.sh, Shodan, urlscan.io, VirusTotal и другие" loading="lazy" decoding="async">
       </figure>
     </div>
-  </section>
+    <p class="cap" style="margin-top:18px">Доска · демо-дело, режим <span id="boardModeCap">2D</span><kbd style="margin-left:10px">Ctrl Shift D</kbd></p>
 
-  <section id="local">
-    <div class="wrap">
-      <div class="head rv">
-        <div class="label">Приватность</div>
-        <h2>Ваше дело никуда не улетает</h2>
-        <p>Umbra работает без аккаунтов и серверов. Данные расследований не покидают компьютер, а ссылки открываются в вашем браузере вместе с вашими сессиями и настройками OPSEC.</p>
+    <div class="facts-row">
+      <div data-reveal><h3>Перетаскивание</h3><p>Объекты раскладываются свободно, связь тянется от точки на краю узла.</p></div>
+      <div data-reveal><h3>Подписи связей</h3><p>«владелец», «A-запись», «контакт»: у каждой связи свой смысл.</p></div>
+      <div data-reveal><h3>Трансформы</h3><p>Пивоты для типа объекта запускаются из инспектора, без перехода в Поиск.</p></div>
+      <div data-reveal><h3>Заметка к объекту</h3><p>Из инспектора создаётся заметка, связанная с узлом доски.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 05 · TOOLS ═══════════════════════════════════════════════════════ -->
+<section class="sec tools" id="tools">
+  <div class="container">
+    <div class="sec-head" style="margin-bottom:0">
+      <span class="eyebrow"><span class="idx">03</span> Инструменты</span>
+      <h2 class="display h-md split">Каталог, собранный для расследований.</h2>
+      <p class="body" data-reveal>Ресурсы разложены по категориям по мотивам OSINT Framework: поиск по названию и адресу, фильтры по типу ресурса, избранное всегда под рукой.</p>
+    </div>
+  </div>
+  <div class="marquee" aria-label="Категории каталога">
+    <div class="row"><span>Фреймворки и подборки</span><span>Никнеймы</span><span>Email</span><span>Телефоны</span><span>Домены и DNS</span><span>IP и инфраструктура</span><span>Соцсети и мессенджеры</span><span>Изображения и медиа</span><span>Фреймворки и подборки</span><span>Никнеймы</span><span>Email</span><span>Телефоны</span><span>Домены и DNS</span><span>IP и инфраструктура</span><span>Соцсети и мессенджеры</span><span>Изображения и медиа</span></div>
+    <div class="row rev"><span>Геолокация и карты</span><span>Архивы и кэш</span><span>Компании и реестры</span><span>Транспорт</span><span>Криптовалюты</span><span>Поисковики и дорки</span><span>OPSEC исследователя</span><span>Геолокация и карты</span><span>Архивы и кэш</span><span>Компании и реестры</span><span>Транспорт</span><span>Криптовалюты</span><span>Поисковики и дорки</span><span>OPSEC исследователя</span></div>
+  </div>
+  <div class="container tools-grid">
+    <figure class="frame" data-reveal>
+      <img src="assets/img/catalog-1200.jpg" srcset="assets/img/catalog-1200.jpg 1200w, assets/img/catalog-2400.jpg 2400w" sizes="(min-width: 900px) 58vw, 100vw" width="2400" height="1500" alt="Раздел «Инструменты»: список категорий слева и карточки ресурсов — OSINT Framework, Bellingcat Toolkit, SpiderFoot, Maltego, Sherlock и другие" loading="lazy" decoding="async">
+    </figure>
+    <div>
+      <div class="big-num" data-count="94">94</div>
+      <p class="cap">ресурса в 15 категориях</p>
+      <p class="body" style="margin-top:28px" data-reveal>В каждой карточке название, адрес и короткое описание. Метки показывают вид ресурса (веб, GitHub, справочник) и условия доступа (бесплатно, freemium, платно). Ссылки открываются в браузере.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 06 · NOTES ═══════════════════════════════════════════════════════ -->
+<section class="sec" id="notes">
+  <div class="container">
+    <div class="sec-head">
+      <span class="eyebrow"><span class="idx">05</span> Заметки</span>
+      <h2 class="display h-md split">Знание, связанное ссылками.</h2>
+      <p class="body" data-reveal>Markdown в духе Obsidian: пишите <span class="wikilink mono">[[WHOIS example.com]]</span>, и заметки свяжутся. Обратные ссылки видны рядом, при переименовании ссылки обновляются сами, а граф показывает всю сеть заметок.</p>
+    </div>
+    <div class="notes-stack">
+      <figure class="frame back" data-reveal>
+        <img src="assets/img/notes-1200.jpg" srcset="assets/img/notes-1200.jpg 1200w, assets/img/notes-2400.jpg 2400w" sizes="(min-width: 900px) 70vw, 100vw" width="2400" height="1500" alt="Заметка «Обзор дела» в режиме сплита: исходный Markdown слева, просмотр справа, обратные и исходящие ссылки в правой колонке" loading="lazy" decoding="async">
+      </figure>
+      <figure class="frame front" data-depth>
+        <img src="assets/img/notes-graph-1200.jpg" srcset="assets/img/notes-graph-1200.jpg 1200w, assets/img/notes-graph-2400.jpg 2400w" sizes="(min-width: 900px) 50vw, 100vw" width="2400" height="1500" alt="Граф заметок: «Обзор дела» связан с «WHOIS example.com» и «Хостинг»" loading="lazy" decoding="async">
+      </figure>
+    </div>
+    <p class="cap">Заметки · редактор со сплит-просмотром и граф заметок демо-дела <kbd style="margin-left:10px">Ctrl E</kbd> — редактор, сплит, просмотр</p>
+  </div>
+</section>
+
+<!-- ═══ 07 · IMAGE ═══════════════════════════════════════════════════════ -->
+<section class="sec" id="image">
+  <div class="container">
+    <div class="sec-head">
+      <span class="eyebrow"><span class="idx">06</span> По фото</span>
+      <h2 class="display h-md split">Где ещё встречается этот снимок.</h2>
+      <p class="body" data-reveal>Перетащите фото в окно или вставьте его из буфера. Дальше два пути: поиск прямо в приложении или в привычных поисковиках.</p>
+    </div>
+    <div class="paths" data-reveal>
+      <div>
+        <span class="k">А · внутри приложения</span>
+        <h3 class="h-sm">Google Cloud Vision</h3>
+        <p>Официальный способ искать по изображению в веб-индексе Google. Результаты остаются в истории поисков, и любой поиск можно повторить.</p>
+        <ul>
+          <li><span>Страницы с этим изображением</span><span>полные и частичные совпадения</span></li>
+          <li><span>Похожие изображения</span><span>visually similar</span></li>
+          <li><span>Сущности и лучшая догадка</span><span>web entities</span></li>
+          <li><span>Ваш ключ API</span><span>в диспетчере учётных данных Windows</span></li>
+        </ul>
       </div>
-      <div class="orbit rv">
-        <div><h4>Локальная база</h4><p>SQLite в папке приложения: автосохранение, транзакции, проверка целостности при запуске.</p></div>
-        <div><h4>Резервные копии</h4><p>Ежедневно и перед каждой рискованной операцией. Хранятся последние 15 копий.</p></div>
-        <div><h4>Ключи в системе</h4><p>API-ключи хранятся в Windows Credential Manager, а не в базе и не в экспорте.</p></div>
-        <div><h4>Экспорт в JSON</h4><p>Дело, настройки и память выгружаются в файл, который можно перенести на другой компьютер.</p></div>
+      <div>
+        <span class="k">Б · в вашем браузере</span>
+        <h3 class="h-sm">Четыре поисковика</h3>
+        <p>Umbra копирует фото в буфер обмена и открывает поисковик, где остаётся нажать Ctrl V. Само приложение никуда фото не загружает.</p>
+        <ul>
+          <li><span>Google Lens</span><span>lens.google.com</span></li>
+          <li><span>Яндекс Картинки</span><span>yandex.ru/images</span></li>
+          <li><span>Bing Visual Search</span><span>bing.com/visualsearch</span></li>
+          <li><span>TinEye</span><span>tineye.com</span></li>
+        </ul>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="download" class="dl">
-    <div class="wrap rv">
-      <div class="label">Скачать</div>
-      <h2 style="margin-top:16px">Войдите в тень</h2>
-      <p>Скоро здесь появится лаунчер Umbra для Windows. Он установит приложение и будет сам его обновлять.</p>
-      <div class="cta">
-        <span class="btn primary" aria-disabled="true">
-          <svg class="i" viewBox="0 0 24 24"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M4 19h16"/></svg>
-          Лаунчер для Windows <span class="pill">скоро</span>
-        </span>
-      </div>
-      <small>Windows 10 / 11 · x64</small>
+<!-- ═══ 08 · LOCAL-FIRST ═════════════════════════════════════════════════ -->
+<section class="sec local" id="local">
+  <div class="container">
+    <div class="sec-head">
+      <span class="eyebrow"><span class="idx">07</span> Приватность и надёжность</span>
+      <h2 class="display h-lg split">Дело остаётся у вас.</h2>
+      <p class="body" data-reveal>Аккаунтов и сервера Umbra нет. Всё дело хранится в одной SQLite-базе на диске. В сеть уходят только запросы, которые вы запускаете сами: пивоты в браузере, проверка никнейма и Cloud Vision по вашему ключу.</p>
     </div>
-  </section>
+
+    <div class="flow flow-desktop" aria-label="Путь данных от интерфейса к диску">
+      <svg viewBox="0 0 1320 300" role="img" aria-labelledby="flowTitle">
+        <title id="flowTitle">Интерфейс → синхронизация → SQLite umbra.db → резервные копии и экспорт</title>
+        <path class="wire" id="w1" d="M280 150 H 340"/>
+        <path class="wire" id="w2" d="M620 150 H 680"/>
+        <path class="wire" id="w3" d="M960 150 C 1000 150 1000 60 1040 60"/>
+        <path class="wire" id="w4" d="M960 150 C 1000 150 1000 240 1040 240"/>
+        <g class="node"><rect x="0.5" y="90.5" width="279" height="119" rx="12"/><text class="t" x="24" y="132">Интерфейс</text><text x="24" y="160">дела, доска, заметки</text><text x="24" y="180">изменения в памяти</text></g>
+        <g class="node"><rect x="340.5" y="90.5" width="279" height="119" rx="12"/><text class="t" x="364" y="132">Синхронизация</text><text x="364" y="160">запись через ~0,4 с</text><text x="364" y="180">не реже раза в 2 с · при закрытии</text></g>
+        <g class="node key"><rect x="680.5" y="90.5" width="279" height="119" rx="12"/><text class="t" x="704" y="132">umbra.db</text><text x="704" y="160">SQLite · WAL · synchronous=FULL</text><text x="704" y="180">один пакет = одна транзакция</text></g>
+        <g class="node"><rect x="1040.5" y="10.5" width="279" height="99" rx="12"/><text class="t" x="1064" y="48">backups/</text><text x="1064" y="76">последние 15 копий</text></g>
+        <g class="node"><rect x="1040.5" y="190.5" width="279" height="99" rx="12"/><text class="t" x="1064" y="228">Экспорт JSON</text><text x="1064" y="256">настройки и память</text></g>
+        <circle class="pulse" r="3" id="p1"/><circle class="pulse" r="3" id="p2"/>
+      </svg>
+    </div>
+    <ol class="flow-mobile toc" aria-label="Путь данных">
+      <li style="list-style:none"><a href="#local"><span class="n">→</span><span class="t">Интерфейс</span><span class="d">Изменения в памяти приложения</span></a></li>
+      <li style="list-style:none"><a href="#local"><span class="n">→</span><span class="t">Синхронизация</span><span class="d">Запись через ~0,4 с, не реже раза в 2 с, и при закрытии окна</span></a></li>
+      <li style="list-style:none"><a href="#local"><span class="n">→</span><span class="t">umbra.db</span><span class="d">SQLite, WAL, synchronous=FULL, одна транзакция на пакет</span></a></li>
+      <li style="list-style:none"><a href="#local"><span class="n">→</span><span class="t">backups/</span><span class="d">Последние 15 копий</span></a></li>
+    </ol>
+
+    <div class="guarantees">
+      <div data-reveal><h3>Проверка при запуске</h3><p>База проверяется командой <span class="mono">quick_check</span>. Повреждённый файл не удаляется, а сохраняется под другим именем, и данные восстанавливаются из последней исправной копии.</p></div>
+      <div data-reveal><h3>Копии перед риском</h3><p>Резервная копия создаётся раз в сутки при запуске, а также перед обновлением схемы, очисткой, импортом и восстановлением.</p></div>
+      <div data-reveal><h3>Прерванная запись не страшна</h3><p>Каждый пакет изменений — одна транзакция: если запись прервалась, она откатывается целиком.</p></div>
+      <div data-reveal><h3>Только вперёд</h3><p>Схема базы версионируется. Базу от более новой версии приложение не открывает и не меняет.</p></div>
+      <div data-reveal><h3>Ключи вне базы</h3><p>Ключ Cloud Vision хранится в диспетчере учётных данных Windows и не попадает ни в базу, ни в экспорт.</p></div>
+      <div data-reveal><h3>Помнит, где вы остановились</h3><p>Раздел, дело, заметка, выбранный объект, камера доски, фильтры, размер и положение окна.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 09 · SPECS ═══════════════════════════════════════════════════════ -->
+<section class="sec" id="specs">
+  <div class="container specs">
+    <div>
+      <span class="eyebrow"><span class="idx">08</span> Характеристики</span>
+      <h2 class="display h-md split" style="margin-top:26px">Под капотом.</h2>
+      <figure class="frame palette-shot" data-reveal>
+        <img src="assets/img/palette-1320.jpg" width="1320" height="1000" alt="Палитра команд: поиск по командам, инструментам, заметкам; переходы по разделам с сочетаниями клавиш" loading="lazy" decoding="async">
+      </figure>
+      <p class="cap">Палитра команд · Ctrl K</p>
+    </div>
+    <dl class="spec-table">
+      <div data-reveal><dt>Платформа</dt><dd>Windows · установщик .msi / .exe</dd></div>
+      <div data-reveal><dt>Версия</dt><dd>0.1.0</dd></div>
+      <div data-reveal><dt>Ядро</dt><dd>Tauri 2, Rust</dd></div>
+      <div data-reveal><dt>Интерфейс</dt><dd>React 19, TypeScript, Tailwind CSS 4</dd></div>
+      <div data-reveal><dt>Хранилище</dt><dd>SQLite, встроенная в приложение <span class="dim mono">· %APPDATA%\com.umbra.osint\umbra.db</span></dd></div>
+      <div data-reveal><dt>Пивоты</dt><dd>12 типов данных, 76 шаблонов запросов</dd></div>
+      <div data-reveal><dt>Каталог</dt><dd>94 ресурса, 15 категорий</dd></div>
+      <div data-reveal><dt>Поиск по никнейму</dt><dd>Порт Sherlock на Rust · 481 сайт в базе · 24 параллельных запроса <span class="dim">· таймаут 30 с</span></dd></div>
+      <div data-reveal><dt>Поиск по фото</dt><dd>Google Cloud Vision (Web Detection) · Google Lens, Яндекс, Bing, TinEye</dd></div>
+      <div data-reveal><dt>Управление</dt><dd>Палитра <kbd>Ctrl K</kbd>, разделы <kbd>Ctrl 1–6</kbd>, все сочетания переназначаются</dd></div>
+      <div data-reveal><dt>Оформление</dt><dd>Тёмная и светлая темы <kbd>Ctrl Shift L</kbd></dd></div>
+      <div data-reveal><dt>Данные</dt><dd>Экспорт и импорт настроек и памяти в JSON, отдельные дела — тоже</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ═══ 10 · DOWNLOAD ════════════════════════════════════════════════════ -->
+<section class="download" id="download">
+  <div class="eclipse" aria-hidden="true"><div class="corona"></div><div class="disc"></div></div>
+  <div class="container inner">
+    <span class="eyebrow bare">Скачать</span>
+    <h2 class="display h-lg split">Войдите в тень.</h2>
+    <p class="lead" data-reveal>Скоро здесь появится лаунчер Umbra для Windows: он установит приложение и будет его обновлять.</p>
+    <div class="hero-cta" data-reveal>
+      <span class="btn solid" aria-disabled="true">Лаунчер для Windows <span class="tag">скоро</span></span>
+      <a class="btn" href="#top">Наверх <span class="arrow" aria-hidden="true">↑</span></a>
+    </div>
+    <p class="cap" data-reveal>Windows · установщик .msi / .exe</p>
+  </div>
+</section>
+
 </main>
 
-<footer>
-  <div class="wrap">
-    <span class="brand" style="font-size:13px">
-      <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#fafafa"/><circle cx="15.5" cy="10" r="8.6" fill="#000"/></svg>
-      Umbra
-    </span>
-    <span>Поиск по никнейму основан на <a href="https://github.com/sherlock-project/sherlock" style="text-decoration:underline">Sherlock Project</a> (MIT)</span>
-    <span>Используйте ответственно и в рамках закона</span>
+<footer class="foot">
+  <div class="container">
+    <div>
+      <a class="brand" href="#top" aria-label="Umbra — в начало">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#f0f0f0"/><circle cx="15.5" cy="10" r="8.6" fill="#08090b"/></svg>
+        Umbra
+      </a>
+      <p style="margin-top:14px;max-width:36ch">OSINT-верстак для расследований по открытым источникам. Локально, без аккаунтов.</p>
+    </div>
+    <div>
+      <h4>Продукт</h4>
+      <ul><li><a href="#overview">Обзор</a></li><li><a href="#pivot">Поиск</a></li><li><a href="#board">Доска связей</a></li><li><a href="#notes">Заметки</a></li><li><a href="#image">По фото</a></li></ul>
+    </div>
+    <div>
+      <h4>Подробнее</h4>
+      <ul><li><a href="#local">Приватность</a></li><li><a href="#specs">Характеристики</a></li><li><a href="#download">Скачать</a></li><li><a href="https://github.com/sherlock-project/sherlock" rel="noopener">Sherlock Project</a></li></ul>
+    </div>
+    <div class="legal">
+      <span>Поиск по никнейму основан на <a class="u" href="https://github.com/sherlock-project/sherlock" rel="noopener">Sherlock Project</a> (MIT).</span>
+      <span>Используйте ответственно и в рамках закона.</span>
+    </div>
   </div>
 </footer>
 
-<script>
-(() => {
-  document.documentElement.classList.add("js");
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  // Reveal on scroll
-  const io = new IntersectionObserver((es) => es.forEach((e) => {
-    if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
-  }), { threshold: 0.12 });
-  document.querySelectorAll(".rv").forEach((el, i) => {
-    el.style.transitionDelay = el.closest(".hero") ? `${i * 90}ms` : "0ms";
-    io.observe(el);
-  });
-
-  // Cursor spotlight on cards
-  document.querySelectorAll(".card").forEach((c) => c.addEventListener("pointermove", (e) => {
-    const r = c.getBoundingClientRect();
-    c.style.setProperty("--x", `${e.clientX - r.left}px`);
-    c.style.setProperty("--y", `${e.clientY - r.top}px`);
-  }));
-
-  // Sky: starfield + black hole with an accretion disk (like the app's case map)
-  const cv = document.getElementById("sky");
-  const ctx = cv.getContext("2d");
-  let W, H, dpr, stars = [], disk = [];
-  const rand = (a, b) => a + Math.random() * (b - a);
-
-  function setup() {
-    dpr = Math.min(devicePixelRatio || 1, 2);
-    W = innerWidth; H = innerHeight;
-    cv.width = W * dpr; cv.height = H * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    stars = Array.from({ length: Math.round((W * H) / 2600) }, () => ({
-      x: Math.random() * W, y: Math.random() * H, r: Math.random() < 0.06 ? rand(0.9, 1.5) : rand(0.3, 0.8),
-      a: rand(0.25, 0.9), t: rand(0, Math.PI * 2), s: rand(0.4, 1.6),
-    }));
-    const n = W < 700 ? 1400 : 2600;
-    disk = Array.from({ length: n }, () => {
-      const u = Math.random();
-      return { k: 1.35 + Math.pow(u, 1.8) * 4.2, a: rand(0, Math.PI * 2), sz: rand(0.4, 1.4), w: rand(0.6, 1) };
-    });
-  }
-
-  let scrollY = 0;
-  addEventListener("scroll", () => { scrollY = window.scrollY; }, { passive: true });
-
-  function frame(t) {
-    ctx.clearRect(0, 0, W, H);
-    // stars, slow parallax with scroll
-    for (const s of stars) {
-      const tw = reduce ? 1 : 0.6 + 0.4 * Math.sin(t * 0.001 * s.s + s.t);
-      const y = (s.y - scrollY * 0.05 * s.r + H * 4) % H;
-      ctx.globalAlpha = s.a * tw;
-      ctx.fillStyle = "#fff";
-      ctx.fillRect(s.x, y, s.r, s.r);
-    }
-    ctx.globalAlpha = 1;
-
-    // black hole: sits right of the hero on wide screens, drifts up as you scroll
-    const wide = W > 900;
-    const R = Math.min(W, H) * (wide ? 0.085 : 0.11);
-    const cx = wide ? W * 0.74 : W * 0.5;
-    // on phones it sits below the headline so the text stays readable
-    const cy = (wide ? H * 0.48 : H * 0.8) - scrollY * 0.35;
-    if (cy > -R * 8) {
-      const tilt = 0.13;
-      const time = reduce ? 0 : t * 0.00025;
-      const front = [];
-      ctx.globalCompositeOperation = "lighter";
-      // glow
-      const g = ctx.createRadialGradient(cx, cy, R * 0.8, cx, cy, R * 6);
-      g.addColorStop(0, "rgba(255,184,107,0.16)");
-      g.addColorStop(1, "rgba(255,184,107,0)");
-      ctx.fillStyle = g;
-      ctx.fillRect(cx - R * 6, cy - R * 6, R * 12, R * 12);
-      for (const p of disk) {
-        const a = p.a + time * Math.pow(p.k, -1.5) * 6;
-        const x = cx + Math.cos(a) * p.k * R;
-        const y = cy + Math.sin(a) * p.k * R * tilt;
-        if (Math.sin(a) > 0) { front.push(x, y, p); continue; }
-        dot(x, y, p);
-      }
-      // the hole itself and its photon ring
-      ctx.globalCompositeOperation = "source-over";
-      ctx.fillStyle = "#000";
-      ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
-      ctx.globalCompositeOperation = "lighter";
-      ctx.shadowColor = "rgba(255,214,170,0.9)";
-      ctx.shadowBlur = R * 0.6;
-      ctx.strokeStyle = "rgba(255,240,222,0.95)";
-      ctx.lineWidth = Math.max(1.5, R * 0.07);
-      ctx.beginPath(); ctx.arc(cx, cy, R * 1.08, 0, Math.PI * 2); ctx.stroke();
-      ctx.shadowBlur = R * 1.4;
-      ctx.strokeStyle = "rgba(255,190,120,0.35)";
-      ctx.lineWidth = R * 0.18;
-      ctx.beginPath(); ctx.arc(cx, cy, R * 1.12, 0, Math.PI * 2); ctx.stroke();
-      ctx.shadowBlur = 0;
-      for (let i = 0; i < front.length; i += 3) dot(front[i], front[i + 1], front[i + 2]);
-      ctx.globalCompositeOperation = "source-over";
-    }
-    ctx.globalAlpha = 1;
-    if (!reduce) requestAnimationFrame(frame);
-  }
-
-  function dot(x, y, p) {
-    const heat = Math.max(0, 1 - (p.k - 1.35) / 4.2);
-    ctx.globalAlpha = (0.18 + heat * 0.7) * p.w;
-    ctx.fillStyle = heat > 0.75 ? "#fff3e4" : heat > 0.4 ? "#ffd7a8" : "#ffb070";
-    ctx.fillRect(x, y, p.sz, p.sz);
-  }
-
-  setup();
-  addEventListener("resize", () => { setup(); if (reduce) frame(0); });
-  requestAnimationFrame(frame);
-})();
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script type="module" src="assets/js/main.js"></script>
 </body>
 </html>
