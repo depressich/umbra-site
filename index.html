@@ -37,6 +37,7 @@
       <a href="#notes">Заметки</a>
       <a href="#local">Приватность</a>
       <a href="#specs">Характеристики</a>
+      <a href="#changelog">Обновления</a>
     </nav>
     <a class="btn sm" href="#download">Скачать</a>
   </div>
@@ -63,7 +64,7 @@
       <h1 class="display h-xl split" data-hero-title><span class="nw">OSINT-расследование</span> <span class="soft">в одном окне.</span></h1>
       <p class="lead" data-hero>Десктоп-приложение для работы с открытыми источниками: пивоты по идентификаторам, поиск никнейма по сотням сайтов, доска связей и заметки. <strong>Данные дела хранятся на вашем компьютере.</strong></p>
       <div class="hero-cta" data-hero>
-        <a class="btn solid" href="download/UmbraLauncher-setup.exe" download>Скачать для Windows <span class="tag" data-release="version">0.2.1</span></a>
+        <a class="btn solid" href="https://github.com/depressich/umbra-releases/releases/latest/download/Umbra-setup.exe">Скачать для Windows <span class="tag" data-release="version">0.2.1</span></a>
         <a class="btn" href="#overview">Как это устроено <span class="arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
@@ -363,7 +364,7 @@
     </div>
     <dl class="spec-table">
       <div data-reveal><dt>Платформа</dt><dd>Windows x64 · установка для текущего пользователя, без прав администратора</dd></div>
-      <div data-reveal><dt>Обновления</dt><dd>Umbra Launcher: проверка версии, загрузка с проверкой SHA-256, тихая установка</dd></div>
+      <div data-reveal><dt>Обновления</dt><dd>Прямо в приложении: Umbra сообщает о новой версии, загружает установщик с проверкой SHA-256 и перезапускается уже обновлённой</dd></div>
       <div data-reveal><dt>Версия</dt><dd data-release="version">0.2.1</dd></div>
       <div data-reveal><dt>Ядро</dt><dd>Tauri 2, Rust</dd></div>
       <div data-reveal><dt>Интерфейс</dt><dd>React 19, TypeScript, Tailwind CSS 4</dd></div>
@@ -383,18 +384,38 @@
   </div>
 </section>
 
+<!-- ═══ 09.1 · CHANGELOG (entries added by scripts/release.mjs) ═════════════ -->
+<section class="sec changelog-sec" id="changelog">
+  <div class="container">
+    <div class="sec-head">
+      <span class="eyebrow"><span class="idx">09</span> Обновления</span>
+      <h2 class="display h-md split">Что нового.</h2>
+      <p class="body" data-reveal>Все версии Umbra, от новых к старым. Установленная Umbra сама сообщает о новой версии и обновляется в пару кликов, ваши данные при этом сохраняются.</p>
+    </div>
+    <div class="changelog">
+<!-- changelog:start -->
+<article class="cl-entry" data-version="0.3.0" data-reveal><div class="cl-meta"><span class="cl-ver">0.3.0</span><time datetime="2026-11-20">20 ноября 2026</time></div><div class="cl-body"><h4>Обновления прямо в приложении</h4><ul><li><span>Когда выходит новая версия, Umbra сама сообщает об этом: в заголовке окна появляется «Доступна версия…», и один раз открывается окно со списком изменений.</span></li><li><span>Кнопка «Обновить и перезапустить» скачивает установщик и проверяет его по контрольной сумме. Перед установкой Umbra сохраняет данные, затем закрывается на несколько секунд и открывается уже новой версией.</span></li><li><span>В «Настройках» появился раздел «Обновления»: текущая версия, кнопка «Проверить сейчас» и отключение автоматической проверки.</span></li><li><span>Отдельный лаунчер больше не нужен: с сайта скачивается сама Umbra. Если лаунчер у вас установлен, обновите им Umbra в последний раз, а потом удалите его через «Параметры → Приложения». Данные Umbra при этом не затрагиваются.</span></li></ul></div></article>
+<article class="cl-entry" data-version="0.2.1" data-reveal><div class="cl-meta"><span class="cl-ver">0.2.1</span><time datetime="2026-11-20">20 ноября 2026</time></div><div class="cl-body"><h4>Blackbird: ещё сотни сайтов по нику и почте</h4><ul><li><span><b>Никнейм:</b> проверка по списку сообщества WhatsMyName, около 650 сайтов. Многих из них нет в базе Sherlock. Сайты 18+ включаются по желанию. Некоторые сайты отдают имя, аватар и описание профиля. Список сайтов обновляется с GitHub одной кнопкой.</span></li><li><span><b>Почта:</b> 16 сайтов, среди них Gravatar, Spotify, Duolingo, Notion и Adobe. Если у адреса есть профиль Gravatar, видны имя, место и ссылки владельца.</span></li><li><span>Найденное можно открыть разом, отправить на доску со связями или сохранить отчётом в заметку.</span></li></ul><h4>Исправлено</h4><ul><li><span>Кнопка «Остановить» в проверке почты теперь действительно завершает проверку. Раньше программа проверки продолжала работать в фоне.</span></li></ul></div></article>
+<article class="cl-entry" data-version="0.2.0" data-reveal><div class="cl-meta"><span class="cl-ver">0.2.0</span><time datetime="2026-11-19">19 ноября 2026</time></div><div class="cl-body"><h4>Новые инструменты поиска</h4><ul><li><span><b>Автоматическая разведка</b> (на основе SpiderFoot) для домена, IP, email и никнейма. Около 40 источников без API-ключей: DNS, поддомены, сертификаты, архивы, whois, сайт цели, email и телефоны на страницах, соцсети, репутация в чёрных списках. Находки можно отправить на доску или выгрузить в JSON/CSV.</span></li><li><span><b>Почта: на каких сайтах она зарегистрирована</b> (holehe). Около 120 сайтов, результаты появляются по мере проверки. Иногда видна часть привязанного телефона или запасной почты.</span></li><li><span><b>Телефон: сведения о номере</b> (PhoneInfoga). Страна и форматы номера, проверка в OVH Telecom, готовые поисковые запросы: соцсети, сервисы одноразовых номеров, жалобы на звонки, справочники.</span></li><li><span>Результаты всех проверок можно отправить на доску со связями или сохранить отчётом в заметку.</span></li></ul><h4>Аккаунты и общение</h4><ul><li><span>Подготовлены аккаунты (только ник и пароль), зашифрованные сообщения и совместные дела по ссылке-приглашению. Разделы «Сообщения» и «Профиль» заработают, когда будет запущен сервер Umbra.</span></li></ul><h4>Прочее</h4><ul><li><span>Новый значок Umbra.</span></li></ul></div></article>
+<article class="cl-entry" data-version="0.1.1" data-reveal><div class="cl-meta"><span class="cl-ver">0.1.1</span><time datetime="2026-11-18">18 ноября 2026</time></div><div class="cl-body"><h4>Установка</h4><ul><li><span>При установке на рабочем столе всегда появляется ярлык Umbra</span></li></ul></div></article>
+<article class="cl-entry" data-version="0.1.0" data-reveal><div class="cl-meta"><span class="cl-ver">0.1.0</span><time datetime="2026-11-18">18 ноября 2026</time></div><div class="cl-body"><h4>Первый выпуск</h4><ul><li><span>Шесть разделов: Обзор, Поиск, Инструменты, Доска связей, Заметки, По фото</span></li><li><span>Поиск по никнейму на сотнях сайтов на основе Sherlock Project: результаты по мере ответа сайтов, отправка на доску со связями, отчёт в заметку</span></li><li><span>Пивоты по 12 типам данных с автоопределением типа</span></li><li><span>Каталог из 94 OSINT-ресурсов в 15 категориях</span></li><li><span>Доска связей с трансформами из узла и режимом 3D</span></li><li><span>Заметки в Markdown с <code>[[вики-ссылками]]</code> и графом</span></li><li><span>Поиск по фото: Google Cloud Vision в приложении, Google Lens, Яндекс, Bing и TinEye в браузере</span></li><li><span>Все данные хранятся локально в SQLite, с резервными копиями и проверкой целостности</span></li></ul></div></article>
+<!-- changelog:end -->
+    </div>
+  </div>
+</section>
+
 <!-- ═══ 10 · DOWNLOAD ════════════════════════════════════════════════════ -->
 <section class="download" id="download">
   <div class="eclipse" aria-hidden="true"><div class="corona"></div><div class="disc"></div></div>
   <div class="container inner">
     <span class="eyebrow bare">Скачать</span>
     <h2 class="display h-lg split">Войдите в тень.</h2>
-    <p class="lead" data-reveal>Скачайте лаунчер: он установит Umbra, создаст ярлык на рабочем столе, предложит закрепить приложение на панели задач и будет следить за обновлениями. Права администратора не нужны.</p>
+    <p class="lead" data-reveal>Скачайте установщик Umbra: он поставит приложение и создаст ярлык на рабочем столе. Когда выйдет новая версия, Umbra сама предложит обновиться. Права администратора не нужны.</p>
     <div class="hero-cta" data-reveal>
-      <a class="btn solid" href="download/UmbraLauncher-setup.exe" download>Скачать лаунчер <span class="tag" data-release="size">2,2 МБ</span></a>
+      <a class="btn solid" href="https://github.com/depressich/umbra-releases/releases/latest/download/Umbra-setup.exe">Скачать Umbra <span class="tag" data-release="size">43,7 МБ</span></a>
       <a class="btn" href="https://github.com/depressich/umbra-releases/releases/latest">Все релизы <span class="arrow" aria-hidden="true">→</span></a>
     </div>
-    <p class="cap" data-reveal>Windows x64 · версия <span data-release="version">0.2.1</span> · после установки на рабочем столе появится ярлык · установщики пока без цифровой подписи: SmartScreen может попросить подтверждения («Подробнее» → «Выполнить в любом случае»)</p>
+    <p class="cap" data-reveal>Windows x64 · версия <span data-release="version">0.2.1</span> · после установки на рабочем столе появится ярлык · установщик пока без цифровой подписи: SmartScreen может попросить подтверждения («Подробнее» → «Выполнить в любом случае»)</p>
   </div>
 </section>
 
@@ -415,7 +436,7 @@
     </div>
     <div>
       <h4>Подробнее</h4>
-      <ul><li><a href="#local">Приватность</a></li><li><a href="#specs">Характеристики</a></li><li><a href="#download">Скачать</a></li><li><a href="https://github.com/sherlock-project/sherlock" rel="noopener">Sherlock Project</a></li></ul>
+      <ul><li><a href="#local">Приватность</a></li><li><a href="#specs">Характеристики</a></li><li><a href="#changelog">Что нового</a></li><li><a href="#download">Скачать</a></li><li><a href="https://github.com/sherlock-project/sherlock" rel="noopener">Sherlock Project</a></li></ul>
     </div>
     <div class="legal">
       <span>Поиск по никнейму основан на <a class="u" href="https://github.com/sherlock-project/sherlock" rel="noopener">Sherlock Project</a> (MIT), разведка — на <a class="u" href="https://github.com/smicallef/spiderfoot" rel="noopener">SpiderFoot</a> (MIT). Вместе с Umbra устанавливаются отдельные программы <a class="u" href="https://github.com/megadose/holehe" rel="noopener">holehe</a>, <a class="u" href="https://github.com/sundowndev/phoneinfoga" rel="noopener">PhoneInfoga</a> и <a class="u" href="https://github.com/antoniaci/blackbird" rel="noopener">Blackbird</a> (GPL-3.0), их исходный код приложен к каждому <a class="u" href="https://github.com/depressich/umbra-releases/releases" rel="noopener">релизу</a>. Список сайтов <a class="u" href="https://github.com/WebBreacher/WhatsMyName" rel="noopener">WhatsMyName</a> распространяется по лицензии CC BY-SA 4.0.</span>
