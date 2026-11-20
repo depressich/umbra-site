@@ -103,8 +103,8 @@ export function createHero(canvas, opts = {}) {
     c.width = c.height = 256;
     const g = c.getContext("2d");
     const grd = g.createRadialGradient(128, 128, 30, 128, 128, 128);
-    grd.addColorStop(0, "rgba(174,189,208,0.22)");
-    grd.addColorStop(0.45, "rgba(174,189,208,0.06)");
+    grd.addColorStop(0, "rgba(174,189,208,0.08)");
+    grd.addColorStop(0.45, "rgba(174,189,208,0.02)");
     grd.addColorStop(1, "rgba(174,189,208,0)");
     g.fillStyle = grd;
     g.fillRect(0, 0, 256, 256);
