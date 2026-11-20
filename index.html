@@ -183,7 +183,7 @@
     </div>
     <div class="facts-row">
       <div data-reveal><h3>Автоматическая разведка</h3><p>Движок на основе SpiderFoot: около 40 источников без ключей, от DNS, сертификатов, архивов и whois до соцсетей и чёрных списков. Каждая находка запускает следующие проверки.</p></div>
-      <div data-reveal><h3>Почта</h3><p>holehe проверяет около 120 сайтов через формы регистрации и входа. Иногда сайт выдаёт часть привязанного телефона или запасной почты.</p></div>
+      <div data-reveal><h3>Почта и ник</h3><p>holehe проверяет почту примерно на 120 сайтах через формы регистрации и входа. Blackbird добавляет ещё 16 сайтов с профилем Gravatar и около 650 сайтов для ника из списка WhatsMyName.</p></div>
       <div data-reveal><h3>Телефон</h3><p>PhoneInfoga показывает страну и форматы номера, проверяет его в OVH Telecom и собирает поисковые запросы: соцсети, одноразовые номера, жалобы на звонки.</p></div>
       <div data-reveal><h3>Дальше в работу</h3><p>Результаты отправляются на доску со связями, сохраняются отчётом в заметку или выгружаются в JSON и CSV.</p></div>
     </div>
@@ -371,6 +371,7 @@
       <div data-reveal><dt>Пивоты</dt><dd>12 типов данных, 76 шаблонов запросов</dd></div>
       <div data-reveal><dt>Каталог</dt><dd>94 ресурса, 15 категорий</dd></div>
       <div data-reveal><dt>Поиск по никнейму</dt><dd>Порт Sherlock на Rust · 481 сайт в базе · 24 параллельных запроса <span class="dim">· таймаут 30 с</span></dd></div>
+      <div data-reveal><dt>Ещё по нику и почте</dt><dd>Blackbird · список WhatsMyName, около 650 сайтов <span class="dim">· 16 сайтов для почты</span></dd></div>
       <div data-reveal><dt>Разведка</dt><dd>Порт движка SpiderFoot на Rust · 42 модуля без API-ключей <span class="dim">· пассивный и полный профили</span></dd></div>
       <div data-reveal><dt>Почта</dt><dd>holehe · около 120 сайтов <span class="dim">· проверки через сброс пароля выключены по умолчанию</span></dd></div>
       <div data-reveal><dt>Телефон</dt><dd>PhoneInfoga 2.11 · страна и форматы без сети, OVH Telecom, поисковые запросы</dd></div>
@@ -417,7 +418,7 @@
       <ul><li><a href="#local">Приватность</a></li><li><a href="#specs">Характеристики</a></li><li><a href="#download">Скачать</a></li><li><a href="https://github.com/sherlock-project/sherlock" rel="noopener">Sherlock Project</a></li></ul>
     </div>
     <div class="legal">
-      <span>Поиск по никнейму основан на <a class="u" href="https://github.com/sherlock-project/sherlock" rel="noopener">Sherlock Project</a> (MIT), разведка — на <a class="u" href="https://github.com/smicallef/spiderfoot" rel="noopener">SpiderFoot</a> (MIT). Вместе с Umbra устанавливаются отдельные программы <a class="u" href="https://github.com/megadose/holehe" rel="noopener">holehe</a> и <a class="u" href="https://github.com/sundowndev/phoneinfoga" rel="noopener">PhoneInfoga</a> (GPL-3.0), их исходный код приложен к каждому <a class="u" href="https://github.com/depressich/umbra-releases/releases" rel="noopener">релизу</a>.</span>
+      <span>Поиск по никнейму основан на <a class="u" href="https://github.com/sherlock-project/sherlock" rel="noopener">Sherlock Project</a> (MIT), разведка — на <a class="u" href="https://github.com/smicallef/spiderfoot" rel="noopener">SpiderFoot</a> (MIT). Вместе с Umbra устанавливаются отдельные программы <a class="u" href="https://github.com/megadose/holehe" rel="noopener">holehe</a>, <a class="u" href="https://github.com/sundowndev/phoneinfoga" rel="noopener">PhoneInfoga</a> и <a class="u" href="https://github.com/antoniaci/blackbird" rel="noopener">Blackbird</a> (GPL-3.0), их исходный код приложен к каждому <a class="u" href="https://github.com/depressich/umbra-releases/releases" rel="noopener">релизу</a>. Список сайтов <a class="u" href="https://github.com/WebBreacher/WhatsMyName" rel="noopener">WhatsMyName</a> распространяется по лицензии CC BY-SA 4.0.</span>
       <span>Используйте ответственно и в рамках закона.</span>
     </div>
   </div>
