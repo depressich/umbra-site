@@ -65,7 +65,7 @@
       <h1 class="display h-xl split" data-hero-title><span class="nw">OSINT-расследование</span> <span class="soft">в одном окне</span></h1>
       <p class="lead" data-hero>Десктоп-приложение для работы с открытыми источниками: пивоты по идентификаторам, общий поиск всеми инструментами сразу, доска связей и заметки. <strong>Данные дела хранятся на вашем компьютере.</strong></p>
       <div class="hero-cta" data-hero>
-        <a class="btn solid" href="https://github.com/depressich/umbra-releases/releases/latest/download/Umbra-setup.exe">Скачать для Windows <span class="tag" data-release="version">0.5.1</span></a>
+        <a class="btn solid" href="https://github.com/depressich/umbra-releases/releases/latest/download/Umbra-setup.exe">Скачать для Windows <span class="tag" data-release="version">0.5.2</span></a>
         <a class="btn" href="#overview">Как это устроено <span class="arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
@@ -403,7 +403,7 @@
     <dl class="spec-table">
       <div data-reveal><dt>Платформа</dt><dd>Windows x64 · установка для текущего пользователя, без прав администратора</dd></div>
       <div data-reveal><dt>Обновления</dt><dd>Прямо в приложении: Umbra сообщает о новой версии, загружает установщик с проверкой SHA-256 и перезапускается уже обновлённой</dd></div>
-      <div data-reveal><dt>Версия</dt><dd data-release="version">0.5.1</dd></div>
+      <div data-reveal><dt>Версия</dt><dd data-release="version">0.5.2</dd></div>
       <div data-reveal><dt>Ядро</dt><dd>Tauri 2, Rust</dd></div>
       <div data-reveal><dt>Интерфейс</dt><dd>React 19, TypeScript, Tailwind CSS 4</dd></div>
       <div data-reveal><dt>Хранилище</dt><dd>SQLite, встроенная в приложение <span class="dim mono">· %APPDATA%\com.umbra.osint\umbra.db</span></dd></div>
@@ -436,6 +436,7 @@
     </div>
     <div class="changelog">
 <!-- changelog:start -->
+<article class="cl-entry" data-version="0.5.2" data-reveal><div class="cl-meta"><span class="cl-ver">0.5.2</span><time datetime="2026-11-23">23 ноября 2026</time></div><div class="cl-body"><h4>Журнал ошибок и диагностика</h4><ul><li><span>Если раздел приложения не открылся из-за ошибки, вместо пустого окна появляется сообщение с кнопкой «Попробовать снова». Данные дела при этом не затрагиваются.</span></li><li><span>Ошибки записываются в журнал на вашем компьютере. Он занимает не больше 1 МБ и никуда не отправляется.</span></li><li><span>В «Настройки → Обновления» появилась кнопка «Скопировать диагностику». Она копирует версию Umbra и Windows, размер базы и последние ошибки — без содержимого дел. Отчёт можно приложить к сообщению о проблеме.</span></li></ul><h4>Исправлено</h4><ul><li><span>Копирование кода восстановления, ссылки-приглашения и списков найденного больше не вызывает запрос «Сайт хочет просматривать буфер обмена».</span></li></ul></div></article>
 <article class="cl-entry" data-version="0.5.1" data-reveal><div class="cl-meta"><span class="cl-ver">0.5.1</span><time datetime="2026-11-23">23 ноября 2026</time></div><div class="cl-body"><h4>Два аккаунта на одном компьютере</h4><ul><li><span>Umbra можно запустить второй раз с отдельной папкой данных: задайте переменную окружения <code>UMBRA_DATA_DIR</code>. У такой копии свои дела, настройки и свой вход в аккаунт, и она работает рядом с основной. Это удобно, чтобы проверить переписку между двумя аккаунтами или держать рабочий и личный аккаунты раздельно.</span></li><li><span>Обычный запуск не изменился: второе окно по-прежнему не открывается, а выводит на передний план уже запущенное.</span></li></ul></div></article>
 <article class="cl-entry" data-version="0.5.0" data-reveal><div class="cl-meta"><span class="cl-ver">0.5.0</span><time datetime="2026-11-23">23 ноября 2026</time></div><div class="cl-body"><h4>Три языка: русский, английский, украинский</h4><ul><li><span>В «Настройки → Внешний вид» появился выбор языка. Меню, подписи, сообщения об ошибках и даты переводятся сразу, без перезапуска.</span></li><li><span>При первом запуске Umbra берёт язык системы. Если вы обновляетесь со старой версии, интерфейс останется русским.</span></li><li><span>Политика использования тоже доступна на английском и украинском.</span></li><li><span>Названия программ и найденные данные не переводятся.</span></li></ul></div></article>
 <article class="cl-entry" data-version="0.4.1" data-reveal><div class="cl-meta"><span class="cl-ver">0.4.1</span><time datetime="2026-11-23">23 ноября 2026</time></div><div class="cl-body"><h4>Аккаунты и сообщения заработали</h4><ul><li><span>Сервер Umbra запущен. Теперь можно создать аккаунт (только ник и пароль), переписываться с другими пользователями и вести совместные дела по ссылке-приглашению.</span></li><li><span>Сообщения и совместные дела шифруются на вашем устройстве, сервер хранит только зашифрованные данные. Пароль на сервер не передаётся, журналы запросов и IP-адреса не хранятся.</span></li><li><span>Аккаунт по-прежнему необязателен: всё остальное работает без него.</span></li></ul></div></article>
@@ -463,7 +464,7 @@
       <a class="btn solid" href="https://github.com/depressich/umbra-releases/releases/latest/download/Umbra-setup.exe">Скачать Umbra <span class="tag" data-release="size">43,8 МБ</span></a>
       <a class="btn" href="https://github.com/depressich/umbra-releases/releases/latest">Все релизы <span class="arrow" aria-hidden="true">→</span></a>
     </div>
-    <p class="cap" data-reveal>Windows x64 · версия <span data-release="version">0.5.1</span> · после установки на рабочем столе появится ярлык · установщик пока без цифровой подписи: SmartScreen может попросить подтверждения («Подробнее» → «Выполнить в любом случае»)</p>
+    <p class="cap" data-reveal>Windows x64 · версия <span data-release="version">0.5.2</span> · после установки на рабочем столе появится ярлык · установщик пока без цифровой подписи: SmartScreen может попросить подтверждения («Подробнее» → «Выполнить в любом случае»)</p>
   </div>
 </section>
 
