@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Umbra — OSINT-верстак для Windows</title>
-<meta name="description" content="Umbra — десктоп-приложение для расследований по открытым источникам: пивоты по 12 типам данных, поиск никнейма по сотням сайтов, доска связей, заметки и поиск по фото. Данные хранятся локально.">
+<meta name="description" content="Umbra — десктоп-приложение для расследований по открытым источникам: пивоты по 12 типам данных, общий поиск всеми инструментами сразу, проверка ника, почты и телефона, доска связей, заметки, поиск по фото и зашифрованные сообщения. Интерфейс на русском, английском и украинском. Данные дела хранятся локально.">
 <meta name="theme-color" content="#08090b">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Umbra — OSINT-верстак для Windows">
@@ -35,6 +35,7 @@
       <a href="#pivot">Поиск</a>
       <a href="#board">Доска</a>
       <a href="#notes">Заметки</a>
+      <a href="#messages">Сообщения</a>
       <a href="#local">Приватность</a>
       <a href="#specs">Характеристики</a>
       <a href="#changelog">Обновления</a>
@@ -62,7 +63,7 @@
     <div class="hero-copy">
       <span class="eyebrow bare" data-hero>Umbra · OSINT-верстак для Windows</span>
       <h1 class="display h-xl split" data-hero-title><span class="nw">OSINT-расследование</span> <span class="soft">в одном окне</span></h1>
-      <p class="lead" data-hero>Десктоп-приложение для работы с открытыми источниками: пивоты по идентификаторам, поиск никнейма по сотням сайтов, доска связей и заметки. <strong>Данные дела хранятся на вашем компьютере.</strong></p>
+      <p class="lead" data-hero>Десктоп-приложение для работы с открытыми источниками: пивоты по идентификаторам, общий поиск всеми инструментами сразу, доска связей и заметки. <strong>Данные дела хранятся на вашем компьютере.</strong></p>
       <div class="hero-cta" data-hero>
         <a class="btn solid" href="https://github.com/depressich/umbra-releases/releases/latest/download/Umbra-setup.exe">Скачать для Windows <span class="tag" data-release="version">0.5.1</span></a>
         <a class="btn" href="#overview">Как это устроено <span class="arrow" aria-hidden="true">→</span></a>
@@ -73,6 +74,7 @@
         <span><b>Tauri 2</b> · ядро на Rust</span>
         <span><b>SQLite</b> · локальная база</span>
         <span><b>Ctrl K</b> · палитра команд</span>
+        <span><b>RU · EN · UK</b> · язык интерфейса</span>
       </div>
       <div class="scroll-cue"><i></i>Листайте</div>
     </div>
@@ -84,7 +86,7 @@
   <div class="container">
     <div class="sec-head">
       <span class="eyebrow"><span class="idx">01</span> Продукт</span>
-      <h2 class="display h-lg split">Одно дело. Шесть разделов</h2>
+      <h2 class="display h-lg split">Одно дело. Семь разделов</h2>
       <p class="body" data-reveal>Объекты, связи и заметки расследования живут в одном деле. Каждый раздел открывается с клавиатуры, а палитра <kbd>Ctrl K</kbd> находит команду, объект, заметку или настройку.</p>
     </div>
     <div class="stage">
@@ -96,11 +98,12 @@
 
     <div class="toc" role="list">
       <a role="listitem" href="#overview" data-reveal><span class="n">01</span><span class="t">Обзор</span><span class="d">Карта дела, быстрый ввод, сводка и недавние запросы</span><kbd>Ctrl 1</kbd></a>
-      <a role="listitem" href="#pivot" data-reveal><span class="n">02</span><span class="t">Поиск</span><span class="d">Пивоты по 12 типам данных с автоопределением типа и проверкой никнейма по сайтам</span><kbd>Ctrl 2</kbd></a>
+      <a role="listitem" href="#pivot" data-reveal><span class="n">02</span><span class="t">Поиск</span><span class="d">Пивоты по 12 типам данных, проверки ника, почты и телефона, общий поиск всеми инструментами</span><kbd>Ctrl 2</kbd></a>
       <a role="listitem" href="#tools" data-reveal><span class="n">03</span><span class="t">Инструменты</span><span class="d">Каталог из 94 ресурсов в 15 категориях с фильтрами и избранным</span><kbd>Ctrl 3</kbd></a>
       <a role="listitem" href="#board" data-reveal><span class="n">04</span><span class="t">Доска связей</span><span class="d">Граф сущностей в духе Maltego: связи с подписями, трансформы из узла, режим 3D</span><kbd>Ctrl 4</kbd></a>
       <a role="listitem" href="#notes" data-reveal><span class="n">05</span><span class="t">Заметки</span><span class="d">Markdown с вики-ссылками и обратными ссылками, граф заметок</span><kbd>Ctrl 5</kbd></a>
       <a role="listitem" href="#image" data-reveal><span class="n">06</span><span class="t">По фото</span><span class="d">Google Cloud Vision в приложении и четыре поисковика в браузере</span><kbd>Ctrl 6</kbd></a>
+      <a role="listitem" href="#messages" data-reveal><span class="n">07</span><span class="t">Сообщения</span><span class="d">Зашифрованная переписка и совместные дела по ссылке-приглашению</span><kbd>Ctrl 7</kbd></a>
     </div>
   </div>
 </section>
@@ -187,6 +190,23 @@
       <div data-reveal><h3>Почта и ник</h3><p>holehe проверяет почту примерно на 120 сайтах через формы регистрации и входа. Blackbird добавляет ещё 16 сайтов с профилем Gravatar и около 650 сайтов для ника из списка WhatsMyName.</p></div>
       <div data-reveal><h3>Телефон</h3><p>PhoneInfoga показывает страну и форматы номера, проверяет его в OVH Telecom и собирает поисковые запросы: соцсети, одноразовые номера, жалобы на звонки.</p></div>
       <div data-reveal><h3>Дальше в работу</h3><p>Результаты отправляются на доску со связями, сохраняются отчётом в заметку или выгружаются в JSON и CSV.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 02.3 · UNIFIED SEARCH ═════════════════════════════════════════════ -->
+<section class="sec" id="unified">
+  <div class="container">
+    <div class="sec-head" style="margin-bottom:0">
+      <span class="eyebrow"><span class="idx">02.3</span> Общий поиск</span>
+      <h2 class="display h-md split">Все инструменты разом. Одна связь без повторов</h2>
+      <p class="body" data-reveal>Одна кнопка запускает все подходящие проверки сразу. Когда они закончат, найденное само соберётся в одну связь на доске: каждый профиль, сайт и адрес попадает туда один раз, и видно, какой инструмент его нашёл.</p>
+    </div>
+    <div class="facts-row">
+      <div data-reveal><h3>Для каждого типа — свой набор</h3><p>Ник: Sherlock, Blackbird и разведка. Почта: holehe, Blackbird и разведка. Телефон: PhoneInfoga. Домен и IP: разведка.</p></div>
+      <div data-reveal><h3>Без повторов</h3><p>Один и тот же профиль или сайт, найденный разными инструментами, становится одним объектом. То, что уже есть на доске, не дублируется.</p></div>
+      <div data-reveal><h3>Связи по смыслу</h3><p>Имя, место и другие адреса из профиля привязываются к этому профилю, а не к исходному значению.</p></div>
+      <div data-reveal><h3>Отчёт</h3><p>Сводку по всем инструментам можно сохранить заметкой: что найдено, кем и сколько повторов убрано.</p></div>
     </div>
   </div>
 </section>
@@ -308,13 +328,32 @@
   </div>
 </section>
 
+<!-- ═══ 07 · MESSAGES ═══════════════════════════════════════════════════ -->
+<section class="sec" id="messages">
+  <div class="container">
+    <div class="sec-head">
+      <span class="eyebrow"><span class="idx">07</span> Сообщения</span>
+      <h2 class="display h-md split">Переписка, которую читаете только вы</h2>
+      <p class="body" data-reveal>Аккаунт Umbra необязателен, но с ним можно переписываться с коллегами и вести дело вместе. Всё шифруется на вашем устройстве: сервер передаёт и хранит только шифротекст.</p>
+    </div>
+    <div class="guarantees">
+      <div data-reveal><h3>Только ник и пароль</h3><p>Ни почты, ни телефона. Списка пользователей нет: человека можно найти только по точному нику.</p></div>
+      <div data-reveal><h3>Пароль не покидает устройство</h3><p>Из пароля локально выводятся ключи (Argon2id). Сервер хранит лишь хеш производного ключа.</p></div>
+      <div data-reveal><h3>Сквозное шифрование</h3><p>Ключ каждого чата вычисляется на устройствах собеседников. Сообщения расшифровываются только у них.</p></div>
+      <div data-reveal><h3>Отпечаток ключа</h3><p>Сверьте отпечатки с собеседником лично или другим каналом — так видно, что переписку никто не подменил.</p></div>
+      <div data-reveal><h3>Совместные дела</h3><p>Дело можно открыть коллеге по ссылке-приглашению. Объекты, связи и заметки синхронизируются в зашифрованном виде.</p></div>
+      <div data-reveal><h3>Минимум метаданных</h3><p>IP-адреса и журналы запросов не хранятся. Код восстановления выдаётся один раз, и его не знает никто, кроме вас.</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ 08 · LOCAL-FIRST ═════════════════════════════════════════════════ -->
 <section class="sec local" id="local">
   <div class="container">
     <div class="sec-head">
-      <span class="eyebrow"><span class="idx">07</span> Приватность и надёжность</span>
+      <span class="eyebrow"><span class="idx">08</span> Приватность и надёжность</span>
       <h2 class="display h-lg split">Дело остаётся у вас</h2>
-      <p class="body" data-reveal>Аккаунт не нужен. Всё дело хранится в одной SQLite-базе на диске. В сеть уходят только запросы, которые вы запускаете сами: пивоты в браузере, проверки никнейма, почты и телефона, разведка и Cloud Vision по вашему ключу. Все они идут напрямую с вашего компьютера.</p>
+      <p class="body" data-reveal>Аккаунт не нужен. Всё дело хранится в одной SQLite-базе на диске. В сеть уходят только запросы, которые вы запускаете сами: пивоты в браузере, проверки никнейма, почты и телефона, разведка и Cloud Vision по вашему ключу. Все они идут напрямую с вашего компьютера. Если вы создадите аккаунт для сообщений, на сервер попадает только то, что вы отправили, и только в зашифрованном виде.</p>
     </div>
 
     <div class="flow flow-desktop" aria-label="Путь данных от интерфейса к диску">
@@ -344,7 +383,7 @@
       <div data-reveal><h3>Копии перед риском</h3><p>Резервная копия создаётся раз в сутки при запуске, а также перед обновлением схемы, очисткой, импортом и восстановлением.</p></div>
       <div data-reveal><h3>Прерванная запись не страшна</h3><p>Каждый пакет изменений — одна транзакция: если запись прервалась, она откатывается целиком.</p></div>
       <div data-reveal><h3>Только вперёд</h3><p>Схема базы версионируется. Базу от более новой версии приложение не открывает и не меняет.</p></div>
-      <div data-reveal><h3>Ключи вне базы</h3><p>Ключ Cloud Vision хранится в диспетчере учётных данных Windows и не попадает ни в базу, ни в экспорт.</p></div>
+      <div data-reveal><h3>Ключи вне базы</h3><p>Ключ Cloud Vision и сессия аккаунта хранятся в диспетчере учётных данных Windows и не попадают ни в базу, ни в экспорт.</p></div>
       <div data-reveal><h3>Помнит, где вы остановились</h3><p>Раздел, дело, заметка, выбранный объект, камера доски, фильтры, размер и положение окна.</p></div>
     </div>
   </div>
@@ -354,7 +393,7 @@
 <section class="sec" id="specs">
   <div class="container specs">
     <div>
-      <span class="eyebrow"><span class="idx">08</span> Характеристики</span>
+      <span class="eyebrow"><span class="idx">09</span> Характеристики</span>
       <h2 class="display h-md split" style="margin-top:26px">Под капотом</h2>
       <figure class="frame palette-shot" data-reveal>
         <img src="assets/img/palette-1320.jpg" width="1320" height="1000" alt="Палитра команд: поиск по командам, инструментам, заметкам; переходы по разделам с сочетаниями клавиш" loading="lazy" decoding="async">
@@ -375,10 +414,14 @@
       <div data-reveal><dt>Разведка</dt><dd>Порт движка SpiderFoot на Rust · 42 модуля без API-ключей <span class="dim">· пассивный и полный профили</span></dd></div>
       <div data-reveal><dt>Почта</dt><dd>holehe · около 120 сайтов <span class="dim">· проверки через сброс пароля выключены по умолчанию</span></dd></div>
       <div data-reveal><dt>Телефон</dt><dd>PhoneInfoga 2.11 · страна и форматы без сети, OVH Telecom, поисковые запросы</dd></div>
+      <div data-reveal><dt>Общий поиск</dt><dd>Все подходящие инструменты одной кнопкой · одна связь на доске без повторов</dd></div>
       <div data-reveal><dt>Поиск по фото</dt><dd>Google Cloud Vision (Web Detection) · Google Lens, Яндекс, Bing, TinEye</dd></div>
-      <div data-reveal><dt>Управление</dt><dd>Палитра <kbd>Ctrl K</kbd>, разделы <kbd>Ctrl 1–6</kbd>, все сочетания переназначаются</dd></div>
+      <div data-reveal><dt>Сообщения</dt><dd>Необязательный аккаунт · сквозное шифрование сообщений и совместных дел <span class="dim">· сервер на Cloudflare хранит только шифротекст</span></dd></div>
+      <div data-reveal><dt>Управление</dt><dd>Палитра <kbd>Ctrl K</kbd>, разделы <kbd>Ctrl 1–7</kbd>, все сочетания переназначаются</dd></div>
+      <div data-reveal><dt>Языки</dt><dd>Русский, английский, украинский <span class="dim">· при первом запуске — язык системы</span></dd></div>
       <div data-reveal><dt>Оформление</dt><dd>Тёмная и светлая темы <kbd>Ctrl Shift L</kbd></dd></div>
       <div data-reveal><dt>Данные</dt><dd>Экспорт и импорт настроек и памяти в JSON, отдельные дела — тоже</dd></div>
+      <div data-reveal><dt>Правила и лицензии</dt><dd>Политика использования и лицензии всех инструментов, данных и библиотек с полными текстами — прямо в настройках</dd></div>
     </dl>
   </div>
 </section>
@@ -387,7 +430,7 @@
 <section class="sec changelog-sec" id="changelog">
   <div class="container">
     <div class="sec-head">
-      <span class="eyebrow"><span class="idx">09</span> Обновления</span>
+      <span class="eyebrow"><span class="idx">10</span> Обновления</span>
       <h2 class="display h-md split">Что нового</h2>
       <p class="body" data-reveal>Все версии Umbra, от новых к старым. Установленная Umbra сама сообщает о новой версии и обновляется в пару кликов, ваши данные при этом сохраняются.</p>
     </div>
@@ -433,11 +476,11 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#f0f0f0"/><circle cx="15.5" cy="10" r="8.6" fill="#08090b"/></svg>
         Umbra
       </a>
-      <p style="margin-top:14px;max-width:36ch">OSINT-верстак для расследований по открытым источникам. Локально, без аккаунтов.</p>
+      <p style="margin-top:14px;max-width:36ch">OSINT-верстак для расследований по открытым источникам. Данные — локально, аккаунт — по желанию.</p>
     </div>
     <div>
       <h4>Продукт</h4>
-      <ul><li><a href="#overview">Обзор</a></li><li><a href="#pivot">Поиск</a></li><li><a href="#recon">Разведка</a></li><li><a href="#board">Доска связей</a></li><li><a href="#notes">Заметки</a></li><li><a href="#image">По фото</a></li></ul>
+      <ul><li><a href="#overview">Обзор</a></li><li><a href="#pivot">Поиск</a></li><li><a href="#recon">Разведка</a></li><li><a href="#unified">Общий поиск</a></li><li><a href="#board">Доска связей</a></li><li><a href="#notes">Заметки</a></li><li><a href="#image">По фото</a></li><li><a href="#messages">Сообщения</a></li></ul>
     </div>
     <div>
       <h4>Подробнее</h4>
