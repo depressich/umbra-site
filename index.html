@@ -64,7 +64,7 @@
       <h1 class="display h-xl split" data-hero-title><span class="nw">OSINT-расследование</span> <span class="soft">в одном окне</span></h1>
       <p class="lead" data-hero>Десктоп-приложение для работы с открытыми источниками: пивоты по идентификаторам, поиск никнейма по сотням сайтов, доска связей и заметки. <strong>Данные дела хранятся на вашем компьютере.</strong></p>
       <div class="hero-cta" data-hero>
-        <a class="btn solid" href="https://github.com/depressich/umbra-releases/releases/latest/download/Umbra-setup.exe">Скачать для Windows <span class="tag" data-release="version">0.4.1</span></a>
+        <a class="btn solid" href="https://github.com/depressich/umbra-releases/releases/latest/download/Umbra-setup.exe">Скачать для Windows <span class="tag" data-release="version">0.5.0</span></a>
         <a class="btn" href="#overview">Как это устроено <span class="arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
@@ -364,7 +364,7 @@
     <dl class="spec-table">
       <div data-reveal><dt>Платформа</dt><dd>Windows x64 · установка для текущего пользователя, без прав администратора</dd></div>
       <div data-reveal><dt>Обновления</dt><dd>Прямо в приложении: Umbra сообщает о новой версии, загружает установщик с проверкой SHA-256 и перезапускается уже обновлённой</dd></div>
-      <div data-reveal><dt>Версия</dt><dd data-release="version">0.4.1</dd></div>
+      <div data-reveal><dt>Версия</dt><dd data-release="version">0.5.0</dd></div>
       <div data-reveal><dt>Ядро</dt><dd>Tauri 2, Rust</dd></div>
       <div data-reveal><dt>Интерфейс</dt><dd>React 19, TypeScript, Tailwind CSS 4</dd></div>
       <div data-reveal><dt>Хранилище</dt><dd>SQLite, встроенная в приложение <span class="dim mono">· %APPDATA%\com.umbra.osint\umbra.db</span></dd></div>
@@ -393,6 +393,7 @@
     </div>
     <div class="changelog">
 <!-- changelog:start -->
+<article class="cl-entry" data-version="0.5.0" data-reveal><div class="cl-meta"><span class="cl-ver">0.5.0</span><time datetime="2026-11-23">23 ноября 2026</time></div><div class="cl-body"><h4>Три языка: русский, английский, украинский</h4><ul><li><span>В «Настройки → Внешний вид» появился выбор языка. Меню, подписи, сообщения об ошибках и даты переводятся сразу, без перезапуска.</span></li><li><span>При первом запуске Umbra берёт язык системы. Если вы обновляетесь со старой версии, интерфейс останется русским.</span></li><li><span>Политика использования тоже доступна на английском и украинском.</span></li><li><span>Названия программ и найденные данные не переводятся.</span></li></ul></div></article>
 <article class="cl-entry" data-version="0.4.1" data-reveal><div class="cl-meta"><span class="cl-ver">0.4.1</span><time datetime="2026-11-23">23 ноября 2026</time></div><div class="cl-body"><h4>Аккаунты и сообщения заработали</h4><ul><li><span>Сервер Umbra запущен. Теперь можно создать аккаунт (только ник и пароль), переписываться с другими пользователями и вести совместные дела по ссылке-приглашению.</span></li><li><span>Сообщения и совместные дела шифруются на вашем устройстве, сервер хранит только зашифрованные данные. Пароль на сервер не передаётся, журналы запросов и IP-адреса не хранятся.</span></li><li><span>Аккаунт по-прежнему необязателен: всё остальное работает без него.</span></li></ul></div></article>
 <article class="cl-entry" data-version="0.4.0" data-reveal><div class="cl-meta"><span class="cl-ver">0.4.0</span><time datetime="2026-11-20">20 ноября 2026</time></div><div class="cl-body"><h4>Общий поиск</h4><ul><li><span>В «Поиске» появилась панель «Общий поиск». Одна кнопка запускает все подходящие инструменты сразу: для ника — Sherlock, Blackbird и разведку, для почты — holehe, Blackbird и разведку, для телефона — PhoneInfoga, для домена и IP — разведку.</span></li><li><span>Когда инструменты закончат, всё найденное само соберётся в одну связь на доске. Имя, место и другие адреса из профиля привязываются к этому профилю.</span></li><li><span>Повторов нет. Один и тот же профиль или сайт, найденный разными инструментами, становится одним объектом, и видно, кто его нашёл. То, что уже есть на доске, не дублируется.</span></li><li><span>Сводку можно сохранить отчётом в заметку.</span></li></ul><h4>Правила и лицензии</h4><ul><li><span>В «Настройках» появился раздел «Правила и лицензии». В нём политика использования — как пользоваться Umbra законно и что запрещено — и лицензии всех встроенных инструментов, данных и библиотек с полными текстами.</span></li></ul></div></article>
 <article class="cl-entry" data-version="0.3.2" data-reveal><div class="cl-meta"><span class="cl-ver">0.3.2</span><time datetime="2026-11-20">20 ноября 2026</time></div><div class="cl-body"><h4>Исправлено</h4><ul><li><span>Новые версии теперь видны сразу после выхода. Раньше GitHub несколько минут после релиза отдавал прежнюю версию, и проверка обновлений говорила «Это последняя версия».</span></li></ul></div></article>
@@ -415,10 +416,10 @@
     <h2 class="display h-lg split">Войдите в тень</h2>
     <p class="lead" data-reveal>Скачайте установщик Umbra: он поставит приложение и создаст ярлык на рабочем столе. Когда выйдет новая версия, Umbra сама предложит обновиться. Права администратора не нужны.</p>
     <div class="hero-cta" data-reveal>
-      <a class="btn solid" href="https://github.com/depressich/umbra-releases/releases/latest/download/Umbra-setup.exe">Скачать Umbra <span class="tag" data-release="size">43,7 МБ</span></a>
+      <a class="btn solid" href="https://github.com/depressich/umbra-releases/releases/latest/download/Umbra-setup.exe">Скачать Umbra <span class="tag" data-release="size">43,8 МБ</span></a>
       <a class="btn" href="https://github.com/depressich/umbra-releases/releases/latest">Все релизы <span class="arrow" aria-hidden="true">→</span></a>
     </div>
-    <p class="cap" data-reveal>Windows x64 · версия <span data-release="version">0.4.1</span> · после установки на рабочем столе появится ярлык · установщик пока без цифровой подписи: SmartScreen может попросить подтверждения («Подробнее» → «Выполнить в любом случае»)</p>
+    <p class="cap" data-reveal>Windows x64 · версия <span data-release="version">0.5.0</span> · после установки на рабочем столе появится ярлык · установщик пока без цифровой подписи: SmartScreen может попросить подтверждения («Подробнее» → «Выполнить в любом случае»)</p>
   </div>
 </section>
 
